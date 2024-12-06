@@ -2,16 +2,21 @@
 
 'use client'
 
-import { Home, FileScan, Activity, Sliders, Dumbbell } from "lucide-react";
+import { Home, FileScan, Activity, Sliders, Dumbbell, Bug } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
-  { icon: FileScan, label: "Scanner", href: "/scanner" },
-  { icon: Activity, label: "Monitor", href: "/monitor" },
-  { icon: Sliders, label: "Control", href: "/control" },
-  { icon: Dumbbell, label: "Training", href: "/training" }
+    { icon: FileScan, label: "Scanner", href: "/scanner" },
+    { icon: Activity, label: "Monitor", href: "/monitor" },
+    { icon: Sliders, label: "Control", href: "/control" },
+    { icon: Dumbbell, label: "Training", href: "/training" },
+  {
+    icon: Bug,
+    label: "Debug",
+    href: "/debug"
+  }
 ];
 
 export default function Sidebar({ className }: { className?: string }) {

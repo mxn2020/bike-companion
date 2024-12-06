@@ -2,7 +2,7 @@
 
 'use client'
 
-import { FileScan, Activity, Sliders, Dumbbell } from "lucide-react";
+import { FileScan, Activity, Sliders, Dumbbell, Bug } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -11,7 +11,12 @@ const tabs = [
   { icon: FileScan, label: "Scanner", href: "/scanner" },
   { icon: Activity, label: "Monitor", href: "/monitor" },
   { icon: Sliders, label: "Control", href: "/control" },
-  { icon: Dumbbell, label: "Training", href: "/training" }
+  { icon: Dumbbell, label: "Training", href: "/training" },
+{
+  icon: Bug,
+  label: "Debug",
+  href: "/debug"
+}
 ];
 
 export default function MobileNav({ className }: { className?: string }) {
