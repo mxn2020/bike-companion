@@ -47,8 +47,15 @@ export const CONTROL_COMMANDS = {
   INIT_A3: new Uint8Array([0xf0, 0xa3, 0x01, 0x01, 0x01, 0x96]),
   START: new Uint8Array([0xf0, 0xa5, 0x01, 0x01, 0x02, 0x99]),
   STOP: new Uint8Array([0xf0, 0xa5, 0x01, 0x01, 0x04, 0x9b]),
-  READ: new Uint8Array([0xf0, 0xa2, 0x01, 0x01, 0x94])
-};
+  READ: new Uint8Array([0xf0, 0xa2, 0x01, 0x01, 0x94]),
+  // Base command for setting resistance level
+  setResistanceLevel: (level: number) => {
+    const data = new Uint8Array([0xf0, 0xa6, 0x01, 0x01, level]);
+    // Calculate checksum
+    data[5] = (0xf0 + 0xa6 + 3 + level) & 0xFF;
+    return data;
+  }
+} as const;
 
 export function parseIndoorBikeData(dataView: DataView): {
   time?: number;
