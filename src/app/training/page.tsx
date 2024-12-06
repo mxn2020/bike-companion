@@ -18,6 +18,8 @@ import {
   type BikeCharacteristics,
   BIKE_SERVICES 
 } from '@/lib/bikeFeatures';
+import { useBrowserCompatibility } from '@/hooks/useBrowserCompatibility';
+import { BluetoothAlert } from '../components/BluetoothAlert';
 
 interface WorkoutMetrics {
   speed: number;
@@ -30,6 +32,7 @@ const MAX_HISTORY_POINTS = 50;
 
 export default function TrainingPage() {
   const { device, error, isConnecting, connect } = useBluetoothDevice();
+  const { isCompatible, errorMessage } = useBrowserCompatibility();
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [isWorkoutActive, setIsWorkoutActive] = useState(false);
   const [workoutDuration, setWorkoutDuration] = useState(0);
@@ -205,18 +208,26 @@ export default function TrainingPage() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Training</h1>
-        {(error || connectionError) && (
+        
+        {!isCompatible && errorMessage && (
+          <BluetoothAlert message={errorMessage} />
+        )}
+        
+        {(error || connectionError) && isCompatible && (
           <ErrorAlert
             title="Connection Error"
             message={connectionError || error?.message || 'Unknown error'}
           />
         )}
-        <Button 
-          onClick={handleConnect}
-          disabled={!!device || isConnecting}
-        >
-          {isConnecting ? "Connecting..." : device ? "Connected" : "Connect"}
-        </Button>
+
+        {isCompatible && (
+          <Button 
+            onClick={handleConnect}
+            disabled={!!device || isConnecting}
+          >
+            {isConnecting ? "Connecting..." : device ? "Connected" : "Connect"}
+          </Button>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
